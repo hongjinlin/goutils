@@ -1,0 +1,19 @@
+
+
+1.数据类型转换
+#string到int
+int,err:=strconv.Atoi(string)
+#string到int64
+int64, err := strconv.ParseInt(string, 10, 64)
+#int到string
+string:=strconv.Itoa(int)
+#int64到string
+string:=strconv.FormatInt(int64,10)
+
+interface  -->int
+    var uid interface{}
+    var val int
+    value, ok := uid.(int)
+	if ok {
+		val = value
+	}

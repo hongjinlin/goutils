@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"strconv"
-
 	"github.com/jmcvetta/randutil"
 )
 

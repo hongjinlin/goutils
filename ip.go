@@ -6,6 +6,10 @@ import (
 	"net/http"
 )
 
+type NetUtil struct {
+
+}
+
 const (
 	XForwardedFor = "X-Forwarded-For"
 	XRealIP       = "X-Real-IP"
