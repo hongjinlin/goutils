@@ -10,7 +10,7 @@ type DataChange struct {
 	//线程睡time.Sleep(1 * 1e9)
 }
 
-func( dc *DataChange) Interface2Int(i interface{})int{
+func (dc *DataChange) Interface2Int(i interface{}) int {
 
 	switch v := i.(type) {
 	case int:
@@ -24,40 +24,40 @@ func( dc *DataChange) Interface2Int(i interface{})int{
 
 	if value, ok := i.(int); ok {
 		fmt.Println("类型匹配整型：%d\n", value)
-		return  value
-	} else{
+		return value
+	} else {
 		return -1
 	}
 }
 
-func( dc *DataChange) Interface2String(i interface{})string{
+func (dc *DataChange) Interface2String(i interface{}) string {
 
 	if value, ok := i.(string); ok {
 		//fmt.Printf("类型匹配字符串:%s\n", value)
 		return value
-	}else{
+	} else {
 		return ""
 	}
 }
 
-func( dc *DataChange) Int2String(i int)string{
+func (dc *DataChange) Int2String(i int) string {
 	s := strconv.Itoa(i)
 	//s := strconv.FormatInt(int64(i), 10)
 	return s
 }
 
-func( dc *DataChange) String2Int(s string)int{
+func (dc *DataChange) String2Int(s string) int {
 
-	if i, err := strconv.Atoi(s);err==nil{
+	if i, err := strconv.Atoi(s); err == nil {
 		return i
-	}else{
+	} else {
 		fmt.Println(err)
 		return -1
 	}
 }
 
 //字符串操作
-func( dc *DataChange) StringOperate(s string){
+func (dc *DataChange) StringOperate(s string) {
 
 	//字符串截取
 	/*s := "abcdefg"
@@ -123,4 +123,45 @@ func main() {
 	fmt.Println(strconv.FormatInt(123, 16)) //7b
 }
 
+// 通过map主键唯一的特性过滤重复元素
+func (dc *DataChange) RemoveRepByMap(slc []int) []int {
+	result := []int{}
+	tempMap := map[int]byte{} // 存放不重复主键
+	for _, e := range slc {
+		l := len(tempMap)
+		tempMap[e] = 0
+		if len(tempMap) != l { // 加入map后，map长度变化，则元素不重复
+			result = append(result, e)
+		}
+	}
+	return result
+}
 
+// 通过两重循环过滤重复元素
+func (dc *DataChange) RemoveRepByLoop(slc []int) []int {
+	result := []int{} // 存放结果
+	for i := range slc {
+		flag := true
+		for j := range result {
+			if slc[i] == result[j] {
+				flag = false // 存在重复元素，标识为false
+				break
+			}
+		}
+		if flag { // 标识为false，不添加进结果
+			result = append(result, slc[i])
+		}
+	}
+	return result
+}
+
+// 元素去重
+func (dc *DataChange) RemoveRep(slc []int) []int {
+	if len(slc) < 1024 {
+		// 切片长度小于1024的时候，循环来过滤
+		return dc.RemoveRepByLoop(slc)
+	} else {
+		// 大于的时候，通过map来过滤
+		return dc.RemoveRepByMap(slc)
+	}
+}
